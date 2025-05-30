@@ -1,9 +1,29 @@
 
-import React, { useState } from 'react';
-import { Calendar, MapPin, Users, Zap } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Calendar, MapPin, Users, Zap, Cloud, Droplets, Sun, Wind } from 'lucide-react';
 
 const Timeline = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [visibleEvents, setVisibleEvents] = useState([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(entry.target.getAttribute('data-index'));
+            setVisibleEvents(prev => [...prev, index]);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const eventElements = document.querySelectorAll('[data-index]');
+    eventElements.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
 
   const events = [
     {
@@ -14,7 +34,8 @@ const Timeline = () => {
       description: 'As maiores enchentes da história do estado deixaram milhares de desabrigados e causaram prejuízos bilionários.',
       impact: 'Mais de 600 mil pessoas deslocadas',
       color: 'border-blue-500',
-      bgColor: 'bg-blue-500/20'
+      bgColor: 'bg-blue-500/20',
+      icon: Droplets
     },
     {
       year: '2023',
@@ -24,7 +45,8 @@ const Timeline = () => {
       description: 'Rios atingiram níveis históricos baixos, isolando comunidades ribeirinhas e afetando a biodiversidade.',
       impact: 'Navegação fluvial comprometida por meses',
       color: 'border-yellow-500',
-      bgColor: 'bg-yellow-500/20'
+      bgColor: 'bg-yellow-500/20',
+      icon: Sun
     },
     {
       year: '2022',
@@ -34,7 +56,8 @@ const Timeline = () => {
       description: 'Chuvas torrenciais causaram deslizamentos devastadores na região serrana.',
       impact: '233 mortes confirmadas',
       color: 'border-red-500',
-      bgColor: 'bg-red-500/20'
+      bgColor: 'bg-red-500/20',
+      icon: Cloud
     },
     {
       year: '2021',
@@ -44,7 +67,8 @@ const Timeline = () => {
       description: 'Temperaturas recordes afetaram a agricultura e a saúde pública.',
       impact: 'Perdas de R$ 8 bilhões na agricultura',
       color: 'border-orange-500',
-      bgColor: 'bg-orange-500/20'
+      bgColor: 'bg-orange-500/20',
+      icon: Sun
     },
     {
       year: '2020',
@@ -54,70 +78,83 @@ const Timeline = () => {
       description: 'Queimadas destruíram 30% do bioma, afetando fauna, flora e comunidades locais.',
       impact: '4.1 milhões de hectares queimados',
       color: 'border-red-600',
-      bgColor: 'bg-red-600/20'
+      bgColor: 'bg-red-600/20',
+      icon: Wind
     }
   ];
 
   return (
-    <section id="timeline" className="py-20 bg-slate-800">
+    <section id="timeline" className="py-16 sm:py-20 bg-gradient-to-br from-slate-800 to-slate-900 border-t-4 border-orange-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
             Timeline de <span className="text-orange-400">Eventos</span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed px-2">
             Uma linha do tempo interativa dos principais desastres climáticos no Brasil entre 2020 e 2024
           </p>
         </div>
 
-        <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-1/2 transform -translate-x-0.5 h-full w-1 bg-gradient-to-b from-orange-400 via-blue-400 to-red-400"></div>
+        <div className="relative max-w-5xl mx-auto">
+          {/* Timeline line - Hidden on mobile, visible on larger screens */}
+          <div className="hidden md:block absolute left-1/2 transform -translate-x-0.5 h-full w-1 bg-gradient-to-b from-orange-400 via-blue-400 to-red-400"></div>
 
           {events.map((event, index) => (
-            <div key={index} className="relative flex items-center mb-12">
-              <div className={`w-full ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} flex items-center`}>
+            <div 
+              key={index} 
+              className="relative mb-8 sm:mb-12"
+              data-index={index}
+            >
+              <div className={`w-full ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} flex flex-col md:flex items-center`}>
                 {/* Content card */}
-                <div className="w-5/12">
+                <div className="w-full md:w-5/12 mb-4 md:mb-0">
                   <div 
-                    className={`${event.bgColor} backdrop-blur-sm rounded-lg p-6 border-2 ${event.color} cursor-pointer transition-all duration-300 hover:scale-105 ${
-                      selectedEvent === index ? 'ring-4 ring-white/20' : ''
-                    }`}
+                    className={`${event.bgColor} backdrop-blur-sm rounded-xl p-6 sm:p-8 border-2 ${event.color} cursor-pointer transition-all duration-500 hover:scale-105 shadow-lg hover:shadow-2xl ${
+                      visibleEvents.includes(index) ? 'animate-fade-in opacity-100' : 'opacity-0'
+                    } ${selectedEvent === index ? 'ring-4 ring-white/20 scale-105' : ''}`}
                     onClick={() => setSelectedEvent(selectedEvent === index ? null : index)}
+                    style={{ animationDelay: `${index * 0.2}s` }}
                   >
-                    <div className="flex items-center mb-4">
+                    <div className="flex items-center mb-4 sm:mb-6">
+                      <event.icon className="w-6 h-6 text-orange-400 mr-3" />
                       <Calendar className="w-5 h-5 text-orange-400 mr-2" />
-                      <span className="text-xl font-bold text-white">{event.year}</span>
+                      <span className="text-xl sm:text-2xl font-bold text-white">{event.year}</span>
                     </div>
                     
-                    <h3 className="text-xl font-semibold text-white mb-2">{event.title}</h3>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">{event.title}</h3>
                     
-                    <div className="flex items-center text-gray-300 mb-2">
-                      <MapPin className="w-4 h-4 mr-2" />
+                    <div className="flex items-center text-gray-300 mb-2 text-sm sm:text-base">
+                      <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
                       <span>{event.location}</span>
                     </div>
                     
-                    <div className="flex items-center text-gray-300 mb-4">
-                      <Users className="w-4 h-4 mr-2" />
+                    <div className="flex items-center text-gray-300 mb-4 text-sm sm:text-base">
+                      <Users className="w-4 h-4 mr-2 flex-shrink-0" />
                       <span>{event.affected} afetados</span>
                     </div>
                     
-                    <p className="text-gray-300 text-sm mb-4">{event.description}</p>
+                    <p className="text-gray-300 text-sm sm:text-base mb-4 leading-relaxed">{event.description}</p>
                     
                     {selectedEvent === index && (
-                      <div className="mt-4 p-4 bg-slate-900/50 rounded-lg animate-fade-in">
-                        <div className="flex items-center text-yellow-400 mb-2">
+                      <div className="mt-4 sm:mt-6 p-4 sm:p-6 bg-slate-900/60 rounded-lg animate-fade-in border border-slate-600">
+                        <div className="flex items-center text-yellow-400 mb-3">
                           <Zap className="w-4 h-4 mr-2" />
-                          <span className="font-semibold">Impacto Principal</span>
+                          <span className="font-semibold text-sm sm:text-base">Impacto Principal</span>
                         </div>
-                        <p className="text-gray-300">{event.impact}</p>
+                        <p className="text-gray-300 text-sm sm:text-base leading-relaxed">{event.impact}</p>
                       </div>
                     )}
+                    
+                    <div className="mt-4 text-center">
+                      <span className="text-orange-400 text-sm font-medium">
+                        {selectedEvent === index ? 'Clique para recolher' : 'Clique para expandir'}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Timeline dot */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white rounded-full border-4 border-orange-400 z-10"></div>
+                {/* Timeline dot - Only visible on desktop */}
+                <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white rounded-full border-4 border-orange-400 z-10 shadow-lg"></div>
               </div>
             </div>
           ))}

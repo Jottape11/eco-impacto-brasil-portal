@@ -5,6 +5,7 @@ import HeroSection from '../components/HeroSection';
 import Timeline from '../components/Timeline';
 import Stories from '../components/Stories';
 import Solutions from '../components/Solutions';
+import CallToAction from '../components/CallToAction';
 import Footer from '../components/Footer';
 
 const Index = () => {
@@ -15,6 +16,7 @@ const Index = () => {
       <Timeline />
       <Stories />
       <Solutions />
+      <CallToAction />
       <Footer />
     </div>
   );
