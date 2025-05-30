@@ -1,8 +1,16 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Lightbulb, Shield, Users, Smartphone, Zap, Heart, ArrowRight } from 'lucide-react';
 
 const Solutions = () => {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const solutions = [
     {
       icon: Shield,
@@ -43,8 +51,24 @@ const Solutions = () => {
   ];
 
   return (
-    <section id="solucoes" className="py-16 sm:py-20 bg-gradient-to-br from-slate-900 to-green-900 border-t-4 border-blue-500">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="solucoes" className="relative py-16 sm:py-20 overflow-hidden">
+      {/* Background with parallax effect - wildfire imagery */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center transition-transform duration-200"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=1920&h=1080&fit=crop&q=80')`,
+          transform: `translateY(${scrollY * 0.4}px)`,
+          filter: 'blur(1px)'
+        }}
+      />
+      
+      {/* Dark overlay with blue tint */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 to-green-900/85" />
+      
+      {/* Blue accent border */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
             Soluções <span className="text-orange-400">Inovadoras</span>

@@ -1,9 +1,16 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Heart, MapPin, Eye, Share2, Cloud, Droplets, Sun } from 'lucide-react';
 
 const Stories = () => {
   const [expandedStory, setExpandedStory] = useState(null);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const stories = [
     {
@@ -48,8 +55,24 @@ const Stories = () => {
   ];
 
   return (
-    <section id="historias" className="py-16 sm:py-20 bg-gradient-to-br from-slate-900 via-green-900 to-slate-800 border-t-4 border-green-600">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="historias" className="relative py-16 sm:py-20 overflow-hidden">
+      {/* Background with parallax effect - drought imagery */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center transition-transform duration-200"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=1920&h=1080&fit=crop&q=80')`,
+          transform: `translateY(${scrollY * 0.2}px)`,
+          filter: 'blur(1px)'
+        }}
+      />
+      
+      {/* Dark overlay with green tint */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-green-900/85 to-slate-800/90" />
+      
+      {/* Green accent border */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 via-green-600 to-green-700" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
             Histórias <span className="text-orange-400">Reais</span>

@@ -111,6 +111,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Optimized parallax for mobile */
+@media (max-width: 768px) {
+  .parallax-bg {
+    transform: none !important;
+    background-attachment: scroll !important;
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -208,6 +216,18 @@ html {
   }
 }
 
+/* Transition animations between sections */
+@keyframes section-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Utility classes for better mobile experience */
 .mobile-padding {
   @apply px-4 sm:px-6 lg:px-8;
@@ -247,4 +267,37 @@ html {
 
 .high-contrast-bg {
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+}
+
+/* Section transitions */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+section::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  z-index: -1;
+}
+
+/* Parallax optimization for performance */
+.parallax-container {
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Image optimization for mobile */
+@media (max-width: 768px) {
+  [style*="background-image"] {
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: scroll !important;
+  }
 }

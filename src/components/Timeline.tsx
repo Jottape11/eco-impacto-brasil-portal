@@ -5,8 +5,12 @@ import { Calendar, MapPin, Users, Zap, Cloud, Droplets, Sun, Wind } from 'lucide
 const Timeline = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [visibleEvents, setVisibleEvents] = useState([]);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -22,7 +26,10 @@ const Timeline = () => {
     const eventElements = document.querySelectorAll('[data-index]');
     eventElements.forEach(el => observer.observe(el));
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const events = [
@@ -84,8 +91,24 @@ const Timeline = () => {
   ];
 
   return (
-    <section id="timeline" className="py-16 sm:py-20 bg-gradient-to-br from-slate-800 to-slate-900 border-t-4 border-orange-400">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="timeline" className="relative py-16 sm:py-20 overflow-hidden">
+      {/* Background with parallax effect - flood imagery */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center transition-transform duration-200"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1920&h=1080&fit=crop&q=80')`,
+          transform: `translateY(${scrollY * 0.3}px)`,
+          filter: 'blur(1px)'
+        }}
+      />
+      
+      {/* Dark overlay with gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-800/90 to-slate-900/90" />
+      
+      {/* Orange accent border */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
             Timeline de <span className="text-orange-400">Eventos</span>

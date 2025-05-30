@@ -1,16 +1,36 @@
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Heart, Mail, Share2, ArrowRight } from 'lucide-react';
 
 const CallToAction = () => {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <section id="contato" className="py-16 sm:py-20 bg-gradient-to-br from-orange-600 via-red-600 to-orange-700 relative overflow-hidden">
+    <section id="contato" className="relative py-16 sm:py-20 overflow-hidden">
+      {/* Background with parallax effect - climate change imagery */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center transition-transform duration-200"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1500673922987-e212871fec22?w=1920&h=1080&fit=crop&q=80')`,
+          transform: `translateY(${scrollY * 0.3}px)`,
+          filter: 'blur(1px)'
+        }}
+      />
+      
+      {/* Vibrant overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-600/85 via-red-600/85 to-orange-700/85" />
+      
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.3%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%221%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <Heart className="w-12 h-12 sm:w-16 sm:h-16 text-white mx-auto mb-6 sm:mb-8 animate-pulse" />
           
