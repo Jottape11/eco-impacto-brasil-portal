@@ -24,21 +24,24 @@ const HeroSection = () => {
       value: '83%', 
       label: 'Aumento em eventos extremos', 
       color: 'text-orange-400',
-      source: 'INMET, 2024'
+      source: 'INMET',
+      year: '2020-2024'
     },
     { 
       icon: Users, 
       value: '4.2M', 
       label: 'Pessoas afetadas anualmente', 
       color: 'text-red-400',
-      source: 'Defesa Civil, 2024'
+      source: 'Defesa Civil Nacional',
+      year: '2023'
     },
     { 
       icon: DollarSign, 
       value: 'R$15B', 
       label: 'Em prejuízos anuais', 
       color: 'text-yellow-400',
-      source: 'Banco Mundial, 2024'
+      source: 'Banco Mundial',
+      year: '2024'
     }
   ];
 
@@ -61,7 +64,7 @@ const HeroSection = () => {
       />
       
       {/* Dark overlay for text readability - Enhanced contrast */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-800/90 to-green-900/90" />
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-green-900/95" />
       
       {/* Subtle pattern overlay */}
       <div className="absolute inset-0 opacity-10">
@@ -71,61 +74,70 @@ const HeroSection = () => {
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto py-20">
         {/* Emotional Hook */}
         <div className="mb-8 animate-fade-in">
-          <blockquote className="text-lg sm:text-xl text-orange-300 italic mb-4 font-medium">
+          <blockquote className="text-lg sm:text-xl text-orange-200 italic mb-4 font-medium">
             "Quando a natureza grita, precisamos ouvir."
           </blockquote>
-          <p className="text-gray-300 text-sm">— Maria das Águas, sobrevivente das enchentes no RS</p>
+          <p className="text-gray-200 text-sm">— Maria das Águas, sobrevivente das enchentes no RS</p>
         </div>
 
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 animate-fade-in leading-tight drop-shadow-lg">
-          O <span className="text-orange-400">Chamado</span>
+          O <span className="text-orange-300">Chamado</span>
         </h1>
-        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-gray-200 mb-8 animate-fade-in font-medium drop-shadow-md" style={{ animationDelay: '0.3s' }}>
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-gray-100 mb-8 animate-fade-in font-medium drop-shadow-md" style={{ animationDelay: '0.3s' }}>
           Resposta à Crise Climática
         </h2>
-        <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-12 max-w-4xl mx-auto animate-fade-in leading-relaxed px-2 drop-shadow-sm" style={{ animationDelay: '0.6s' }}>
+        <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-12 max-w-4xl mx-auto animate-fade-in leading-relaxed px-2 drop-shadow-sm" style={{ animationDelay: '0.6s' }}>
           Descubra as histórias reais por trás dos desastres climáticos no Brasil. 
           Dados que importam. Vidas que merecem ser ouvidas.
         </p>
 
-        {/* Statistics */}
+        {/* Statistics with clear sources */}
         <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 transition-all duration-1000 ${
           visibleStats ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
           {stats.map((stat, index) => (
-            <div key={index} className="bg-slate-800/70 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-600 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 focus-within:ring-4 focus-within:ring-orange-400/30">
+            <div key={index} className="bg-slate-800/80 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-600 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 focus-within:ring-4 focus-within:ring-orange-400/50">
               <stat.icon className={`w-8 h-8 sm:w-10 sm:h-10 ${stat.color} mx-auto mb-4`} aria-hidden="true" />
               <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${stat.color} mb-2 drop-shadow-sm`}>
                 {stat.value}
               </div>
-              <div className="text-gray-200 text-sm sm:text-base font-medium mb-2">{stat.label}</div>
-              <div className="text-gray-400 text-xs">{stat.source}</div>
+              <div className="text-gray-100 text-sm sm:text-base font-medium mb-3">{stat.label}</div>
+              <div className="text-gray-300 text-xs mb-1">
+                <strong>Fonte:</strong> {stat.source}
+              </div>
+              <div className="text-gray-400 text-xs">
+                <strong>Período:</strong> {stat.year}
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Action Buttons */}
+        {/* Action Buttons - Standardized */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
           <button 
             onClick={scrollToTimeline}
-            className="bg-orange-500 hover:bg-orange-600 focus:bg-orange-600 focus:outline-none focus:ring-4 focus:ring-orange-400/50 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold transition-all duration-300 transform hover:scale-105 animate-fade-in shadow-lg hover:shadow-xl w-full sm:w-auto" 
+            className="btn-primary w-full sm:w-auto" 
             style={{ animationDelay: '0.9s' }}
+            aria-label="Explorar timeline de eventos climáticos"
           >
             Explore as Histórias
           </button>
           
-          <button className="flex items-center gap-2 border-2 border-white/80 text-white hover:bg-white hover:text-slate-900 focus:bg-white focus:text-slate-900 focus:outline-none focus:ring-4 focus:ring-white/30 px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold transition-all duration-300 w-full sm:w-auto">
+          <button 
+            className="btn-secondary w-full sm:w-auto"
+            aria-label="Assistir vídeo apresentação do projeto"
+          >
             <Play className="w-5 h-5" aria-hidden="true" />
             Assista ao Vídeo
           </button>
         </div>
 
         {/* Scroll Indicator */}
-        <div className="animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse"></div>
+        <div className="animate-bounce" role="presentation" aria-hidden="true">
+          <div className="w-6 h-10 border-2 border-white/60 rounded-full flex justify-center mx-auto">
+            <div className="w-1 h-3 bg-white/80 rounded-full mt-2 animate-pulse"></div>
           </div>
-          <p className="text-white/70 text-sm mt-2">Role para descobrir</p>
+          <p className="text-white/80 text-sm mt-2">Role para descobrir</p>
         </div>
       </div>
 
