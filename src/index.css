@@ -91,7 +91,6 @@
   *:focus {
     outline: 3px solid #f97316;
     outline-offset: 2px;
-    transition: outline 0.2s ease-in-out;
   }
 
   /* Button focus improvements */
@@ -100,7 +99,6 @@
     outline: 3px solid #f97316;
     outline-offset: 3px;
     box-shadow: 0 0 0 6px rgba(249, 115, 22, 0.2);
-    transition: all 0.2s ease-in-out;
   }
 
   /* Skip to content link for screen readers */

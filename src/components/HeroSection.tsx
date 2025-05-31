@@ -47,9 +47,7 @@ const HeroSection = () => {
   };
 
   const handleVideoClick = () => {
-    // Preparado para integração futura do vídeo pitch do YouTube
     console.log('Vídeo pitch será integrado em breve');
-    // Temporariamente, pode mostrar um modal ou scroll para seção específica
   };
 
   return (
@@ -61,7 +59,7 @@ const HeroSection = () => {
 
       {/* Background with parallax effect */}
       <div 
-        className="absolute inset-0 bg-cover bg-center transition-transform duration-200"
+        className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&h=1080&fit=crop&q=80')`,
           transform: `translateY(${scrollY * 0.5}px)`,
@@ -73,28 +71,23 @@ const HeroSection = () => {
       
       {/* Dark overlay for text readability */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-800/90 to-green-900/90" />
-      
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%234A5568%22%20fill-opacity%3D%220.1%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%221%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
-      </div>
 
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto py-20 fade-in-on-scroll visible">
+      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto py-20">
         {/* Emotional Hook */}
-        <div className="mb-8 animate-fade-in">
+        <div className="mb-8">
           <blockquote className="text-lg sm:text-xl text-orange-300 italic mb-4 font-medium">
             "Quando a natureza grita, precisamos ouvir."
           </blockquote>
           <p className="text-gray-300 text-sm">— Maria das Águas, sobrevivente das enchentes no RS</p>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 animate-fade-in leading-tight drop-shadow-lg">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
           O <span className="text-orange-400">Chamado</span>
         </h1>
-        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-gray-200 mb-8 animate-fade-in font-medium drop-shadow-md" style={{ animationDelay: '0.3s' }}>
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-gray-200 mb-8 font-medium drop-shadow-md">
           Resposta à Crise Climática
         </h2>
-        <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-12 max-w-4xl mx-auto animate-fade-in leading-relaxed px-2 drop-shadow-sm" style={{ animationDelay: '0.6s' }}>
+        <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed px-2 drop-shadow-sm">
           Descubra as histórias reais por trás dos desastres climáticos no Brasil. 
           Dados que importam. Vidas que merecem ser ouvidas.
         </p>
@@ -136,8 +129,7 @@ const HeroSection = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
           <button 
             onClick={scrollToTimeline}
-            className="btn-primary" 
-            style={{ animationDelay: '0.9s' }}
+            className="btn-primary"
             aria-label="Explorar as histórias de desastres climáticos"
           >
             Explore as Histórias
