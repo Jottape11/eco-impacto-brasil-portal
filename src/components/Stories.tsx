@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
-import { Heart, MapPin, Eye, Share2, Cloud, Droplets, Sun, ExternalLink, Volume2, User, AlertTriangle } from 'lucide-react';
+import { Heart, MapPin, Eye, Share2, Cloud, Droplets, Sun, ExternalLink, Volume2 } from 'lucide-react';
 
 const Stories = () => {
   const [expandedStory, setExpandedStory] = useState(null);
@@ -26,8 +27,7 @@ const Stories = () => {
       hope: 'Projeto de casas sustentáveis em andamento',
       icon: Droplets,
       iconColor: 'text-blue-400',
-      hasAudio: true,
-      imageAlt: 'Retrato representativo de Maria das Águas, uma mulher idosa resiliente que sobreviveu às enchentes no Rio Grande do Sul'
+      hasAudio: true
     },
     {
       id: 2,
@@ -43,8 +43,7 @@ const Stories = () => {
       hope: 'Sistema de alerta via satélite implementado',
       icon: Sun,
       iconColor: 'text-yellow-400',
-      hasAudio: false,
-      imageAlt: 'João Ribeirinho em sua canoa no Rio Negro durante o período de seca extrema, mostrando a navegação comprometida'
+      hasAudio: false
     },
     {
       id: 3,
@@ -60,8 +59,7 @@ const Stories = () => {
       hope: 'Sistema de monitoramento geológico ampliado',
       icon: Cloud,
       iconColor: 'text-gray-400',
-      hasAudio: true,
-      imageAlt: 'Ana da Montanha, enfermeira e resgatista voluntária, em ação durante as operações de resgate em Petrópolis'
+      hasAudio: true
     }
   ];
 
@@ -76,22 +74,9 @@ const Stories = () => {
     }
   };
 
-  const handleShare = (story) => {
-    if (navigator.share) {
-      navigator.share({
-        title: `História de ${story.title}`,
-        text: story.quote,
-        url: window.location.href
-      });
-    } else {
-      // Fallback for browsers that don't support Web Share API
-      navigator.clipboard.writeText(`${story.title}: ${story.quote} - ${window.location.href}`);
-    }
-  };
-
   return (
-    <section id="historias" className="relative py-16 sm:py-20 overflow-hidden fade-in-on-scroll">
-      {/* Background with parallax effect */}
+    <section id="historias" className="relative py-16 sm:py-20 overflow-hidden">
+      {/* Background with parallax effect - drought imagery */}
       <div 
         className="absolute inset-0 bg-cover bg-center transition-transform duration-200"
         style={{
@@ -100,7 +85,7 @@ const Stories = () => {
           filter: 'blur(1px)'
         }}
         role="img"
-        aria-label="Paisagem árida representando os efeitos da seca e mudanças climáticas"
+        aria-label="Imagem de fundo mostrando paisagem árida afetada pela seca"
       />
       
       {/* Dark overlay with green tint */}
@@ -110,7 +95,7 @@ const Stories = () => {
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 via-green-600 to-green-700" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <header className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
             Histórias <span className="text-orange-400">Reais</span>
           </h2>
@@ -120,143 +105,114 @@ const Stories = () => {
           
           {/* Featured Quote */}
           <div className="mt-8 max-w-3xl mx-auto">
-            <blockquote className="text-xl sm:text-2xl font-medium text-orange-300 italic border-l-4 border-orange-400 pl-6 bg-slate-800/40 rounded-r-lg p-6 card-hover">
+            <blockquote className="text-xl sm:text-2xl font-medium text-orange-300 italic border-l-4 border-orange-400 pl-6 bg-slate-800/40 rounded-r-lg p-6">
               "Cada história que compartilhamos é uma vida que não pode ser esquecida, uma lição que deve ser aprendida."
             </blockquote>
           </div>
-        </header>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
-          {stories.map((story, index) => (
+          {stories.map((story) => (
             <article
               key={story.id}
-              className="card-hover bg-slate-800/70 backdrop-blur-sm rounded-xl overflow-hidden border border-slate-600 shadow-lg group"
-              style={{ animationDelay: `${index * 0.2}s` }}
+              className="bg-slate-800/70 backdrop-blur-sm rounded-xl overflow-hidden border border-slate-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-2xl focus-within:ring-4 focus-within:ring-orange-400/30"
             >
-              {/* Story Image Header */}
               <div
-                className="h-48 sm:h-56 bg-cover bg-center relative overflow-hidden"
+                className="h-48 sm:h-56 bg-cover bg-center relative"
                 style={{ backgroundImage: `url(${story.image})` }}
               >
                 <img 
                   src={story.image} 
-                  alt={story.imageAlt}
+                  alt={`Retrato representativo de ${story.title}, ${story.subtitle} de ${story.location}`}
                   className="w-full h-full object-cover opacity-0"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
-                
-                {/* Story indicators */}
                 <div className="absolute top-4 left-4 flex items-center gap-2">
-                  <story.icon className={`w-6 h-6 ${story.iconColor} group-hover:scale-110 transition-transform`} aria-hidden="true" />
+                  <story.icon className={`w-6 h-6 ${story.iconColor}`} aria-hidden="true" />
                   {story.hasAudio && (
-                    <Volume2 
-                      className="w-5 h-5 text-green-400 group-hover:scale-110 transition-transform" 
-                      aria-label="Depoimento em áudio disponível" 
-                    />
+                    <Volume2 className="w-5 h-5 text-green-400" aria-label="Depoimento em áudio disponível" />
                   )}
                 </div>
-                
-                {/* Location and age info */}
                 <div className="absolute bottom-4 left-4">
                   <div className="flex items-center text-white text-sm sm:text-base mb-2">
-                    <MapPin className="w-4 h-4 mr-2 flex-shrink-0 text-orange-400" aria-hidden="true" />
+                    <MapPin className="w-4 h-4 mr-2 flex-shrink-0" aria-hidden="true" />
                     <span>{story.location}</span>
                   </div>
-                  <div className="flex items-center text-gray-300 text-xs">
-                    <User className="w-3 h-3 mr-1 text-orange-400" aria-hidden="true" />
-                    <span>{story.age}</span>
-                  </div>
+                  <p className="text-gray-300 text-xs">{story.age}</p>
                 </div>
               </div>
 
-              {/* Story Content */}
               <div className="p-4 sm:p-6">
                 <header className="mb-4">
-                  <h3 className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-orange-300 transition-colors">
-                    {story.title}
-                  </h3>
-                  <p className="text-orange-400 text-sm sm:text-base mb-3 font-medium">
-                    {story.subtitle}
-                  </p>
-                  <blockquote className="text-gray-300 text-sm italic border-l-2 border-orange-400 pl-3 mb-4 bg-slate-900/30 rounded-r p-2">
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-2">{story.title}</h3>
+                  <p className="text-orange-400 text-sm sm:text-base mb-3 font-medium">{story.subtitle}</p>
+                  <blockquote className="text-gray-300 text-sm italic border-l-2 border-orange-400 pl-3 mb-4">
                     {story.quote}
                   </blockquote>
                 </header>
                 
-                <div className="space-y-4">
-                  <p className="text-gray-200 text-sm sm:text-base leading-relaxed">
-                    {expandedStory === story.id ? story.fullStory : story.preview}
-                  </p>
+                <p className="text-gray-200 text-sm sm:text-base mb-6 leading-relaxed">
+                  {expandedStory === story.id ? story.fullStory : story.preview}
+                </p>
 
-                  {expandedStory === story.id && (
-                    <div className="space-y-4 animate-fade-in">
-                      <div className="bg-red-900/40 p-4 rounded-lg border border-red-500/30 card-hover">
-                        <h4 className="text-red-300 font-semibold mb-2 text-sm sm:text-base flex items-center">
-                          <AlertTriangle className="w-4 h-4 mr-2" aria-hidden="true" />
-                          Impacto
-                        </h4>
-                        <p className="text-gray-200 text-sm leading-relaxed">{story.impact}</p>
-                      </div>
-                      
-                      <div className="bg-green-900/40 p-4 rounded-lg border border-green-500/30 card-hover">
-                        <h4 className="text-green-300 font-semibold mb-2 text-sm sm:text-base flex items-center">
-                          <Heart className="w-4 h-4 mr-2" aria-hidden="true" />
-                          Esperança
-                        </h4>
-                        <p className="text-gray-200 text-sm leading-relaxed">{story.hope}</p>
-                      </div>
-
-                      {/* Action buttons for expanded state */}
-                      <div className="flex flex-col sm:flex-row gap-2">
-                        <button 
-                          onClick={() => handleShare(story)}
-                          className="interactive-element bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300 flex items-center justify-center gap-2 flex-1"
-                          aria-label={`Compartilhar história de ${story.title}`}
-                        >
-                          <Share2 className="w-4 h-4" aria-hidden="true" />
-                          Compartilhar
-                        </button>
-                        <button 
-                          className="interactive-element bg-red-600 hover:bg-red-700 focus:bg-red-700 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300 flex items-center justify-center gap-2 flex-1"
-                          aria-label={`Apoiar ${story.title}`}
-                        >
-                          <Heart className="w-4 h-4" aria-hidden="true" />
-                          Apoiar
-                        </button>
-                      </div>
-                      
-                      {story.hasAudio && (
-                        <button className="interactive-element w-full bg-green-600 hover:bg-green-700 focus:bg-green-700 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300 flex items-center justify-center gap-2">
-                          <Volume2 className="w-4 h-4" aria-hidden="true" />
-                          Ouvir Depoimento (2:30)
-                        </button>
-                      )}
+                {expandedStory === story.id && (
+                  <div className="space-y-4 animate-fade-in">
+                    <div className="bg-red-900/40 p-4 rounded-lg border border-red-500/30">
+                      <h4 className="text-red-300 font-semibold mb-2 text-sm sm:text-base">Impacto</h4>
+                      <p className="text-gray-200 text-sm leading-relaxed">{story.impact}</p>
                     </div>
-                  )}
+                    
+                    <div className="bg-green-900/40 p-4 rounded-lg border border-green-500/30">
+                      <h4 className="text-green-300 font-semibold mb-2 text-sm sm:text-base">Esperança</h4>
+                      <p className="text-gray-200 text-sm leading-relaxed">{story.hope}</p>
+                    </div>
 
-                  {/* Expand/Collapse button */}
-                  <button
-                    onClick={() => handleExpandStory(story.id)}
-                    onKeyDown={(e) => handleKeyPress(e, story.id)}
-                    className="interactive-element flex items-center gap-2 text-orange-400 hover:text-orange-300 focus:text-orange-300 mt-4 transition-all duration-300 text-sm sm:text-base w-full justify-center sm:justify-start group"
-                    aria-expanded={expandedStory === story.id}
-                    aria-controls={`story-${story.id}-content`}
-                    aria-label={expandedStory === story.id ? `Recolher história de ${story.title}` : `Ler história completa de ${story.title}`}
-                  >
-                    <Eye className="w-4 h-4 group-hover:scale-110 transition-transform" aria-hidden="true" />
-                    {expandedStory === story.id ? 'Ver menos' : 'Ler história completa'}
-                  </button>
-                </div>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <button 
+                        className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 text-white px-4 py-2 rounded-lg text-sm transition-colors flex-1"
+                        aria-label={`Compartilhar história de ${story.title}`}
+                      >
+                        <Share2 className="w-4 h-4" aria-hidden="true" />
+                        Compartilhar
+                      </button>
+                      <button 
+                        className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 focus:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 text-white px-4 py-2 rounded-lg text-sm transition-colors flex-1"
+                        aria-label={`Apoiar ${story.title}`}
+                      >
+                        <Heart className="w-4 h-4" aria-hidden="true" />
+                        Apoiar
+                      </button>
+                    </div>
+                    
+                    {story.hasAudio && (
+                      <button className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 focus:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                        <Volume2 className="w-4 h-4" aria-hidden="true" />
+                        Ouvir Depoimento (2:30)
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                <button
+                  onClick={() => handleExpandStory(story.id)}
+                  onKeyDown={(e) => handleKeyPress(e, story.id)}
+                  className="flex items-center gap-2 text-orange-400 hover:text-orange-300 focus:text-orange-300 focus:outline-none focus:underline mt-4 transition-colors text-sm sm:text-base w-full justify-center sm:justify-start"
+                  aria-expanded={expandedStory === story.id}
+                  aria-controls={`story-${story.id}-content`}
+                >
+                  <Eye className="w-4 h-4" aria-hidden="true" />
+                  {expandedStory === story.id ? 'Ver menos' : 'Ler história completa'}
+                </button>
               </div>
             </article>
           ))}
         </div>
 
         <div className="text-center mt-12">
-          <button className="btn-primary interactive-element">
+          <button className="bg-orange-500 hover:bg-orange-600 focus:bg-orange-600 focus:outline-none focus:ring-4 focus:ring-orange-400/50 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
             <span className="flex items-center gap-2">
               Ver Mais Histórias
-              <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+              <ExternalLink className="w-5 h-5" aria-hidden="true" />
             </span>
           </button>
         </div>

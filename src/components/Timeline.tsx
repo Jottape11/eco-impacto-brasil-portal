@@ -44,8 +44,7 @@ const Timeline = () => {
       color: 'border-blue-500',
       bgColor: 'bg-blue-500/20',
       icon: Droplets,
-      severity: 'critical',
-      imageAlt: 'Representação visual das enchentes devastadoras no Rio Grande do Sul'
+      severity: 'critical'
     },
     {
       year: '2023',
@@ -58,8 +57,7 @@ const Timeline = () => {
       color: 'border-yellow-500',
       bgColor: 'bg-yellow-500/20',
       icon: Sun,
-      severity: 'high',
-      imageAlt: 'Paisagem amazônica durante período de seca extrema'
+      severity: 'high'
     },
     {
       year: '2022',
@@ -72,8 +70,7 @@ const Timeline = () => {
       color: 'border-red-500',
       bgColor: 'bg-red-500/20',
       icon: Cloud,
-      severity: 'critical',
-      imageAlt: 'Região serrana de Petrópolis após deslizamentos causados pelas chuvas'
+      severity: 'critical'
     },
     {
       year: '2021',
@@ -86,8 +83,7 @@ const Timeline = () => {
       color: 'border-orange-500',
       bgColor: 'bg-orange-500/20',
       icon: Sun,
-      severity: 'high',
-      imageAlt: 'Plantação afetada por onda de calor extremo no Centro-Oeste'
+      severity: 'high'
     },
     {
       year: '2020',
@@ -100,8 +96,7 @@ const Timeline = () => {
       color: 'border-red-600',
       bgColor: 'bg-red-600/20',
       icon: Wind,
-      severity: 'critical',
-      imageAlt: 'Pantanal durante os grandes incêndios de 2020'
+      severity: 'critical'
     }
   ];
 
@@ -117,8 +112,8 @@ const Timeline = () => {
   };
 
   return (
-    <section id="timeline" className="relative py-16 sm:py-20 overflow-hidden fade-in-on-scroll">
-      {/* Background with parallax effect */}
+    <section id="timeline" className="relative py-16 sm:py-20 overflow-hidden">
+      {/* Background with parallax effect - flood imagery */}
       <div 
         className="absolute inset-0 bg-cover bg-center transition-transform duration-200"
         style={{
@@ -127,7 +122,7 @@ const Timeline = () => {
           filter: 'blur(1px)'
         }}
         role="img"
-        aria-label="Ponte e cachoeiras durante período de enchente representando eventos climáticos extremos"
+        aria-label="Imagem de fundo mostrando ponte e cachoeiras durante enchente"
       />
       
       {/* Dark overlay with gradient */}
@@ -159,10 +154,10 @@ const Timeline = () => {
               <div className={`w-full ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} flex flex-col md:flex items-center`}>
                 {/* Content card */}
                 <div className="w-full md:w-5/12 mb-4 md:mb-0">
-                  <article 
-                    className={`card-hover ${event.bgColor} backdrop-blur-sm rounded-xl p-6 sm:p-8 border-2 ${event.color} cursor-pointer group ${
+                  <div 
+                    className={`${event.bgColor} backdrop-blur-sm rounded-xl p-6 sm:p-8 border-2 ${event.color} cursor-pointer transition-all duration-500 hover:scale-105 shadow-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-white/30 ${
                       visibleEvents.includes(index) ? 'animate-fade-in opacity-100' : 'opacity-0'
-                    } ${selectedEvent === index ? 'ring-4 ring-orange-400/30 scale-105 shadow-2xl' : ''} ${
+                    } ${selectedEvent === index ? 'ring-4 ring-white/20 scale-105 shadow-orange-500/20' : ''} ${
                       event.severity === 'critical' ? 'animate-pulse' : ''
                     }`}
                     onClick={() => handleEventClick(index)}
@@ -171,44 +166,36 @@ const Timeline = () => {
                     tabIndex={0}
                     aria-expanded={selectedEvent === index}
                     aria-describedby={`event-${index}-description`}
-                    aria-label={`Evento de ${event.year}: ${event.title}. Pressione Enter para expandir detalhes.`}
                     style={{ animationDelay: `${index * 0.2}s` }}
                   >
-                    <header className="flex items-center mb-4 sm:mb-6">
-                      <event.icon 
-                        className={`w-6 h-6 ${event.color.replace('border-', 'text-')} mr-3 transition-all duration-300 group-hover:scale-110 ${selectedEvent === index ? 'scale-125' : ''}`} 
-                        aria-hidden="true" 
-                      />
+                    <div className="flex items-center mb-4 sm:mb-6">
+                      <event.icon className={`w-6 h-6 ${event.color.replace('border-', 'text-')} mr-3 transition-all duration-300 ${selectedEvent === index ? 'scale-125' : ''}`} aria-hidden="true" />
                       <Calendar className="w-5 h-5 text-orange-400 mr-2" aria-hidden="true" />
                       <span className="text-xl sm:text-2xl font-bold text-white">{event.year}</span>
                       {event.severity === 'critical' && (
-                        <span className="ml-3 px-2 py-1 bg-red-500 text-white text-xs font-bold rounded-full animate-pulse">
+                        <span className="ml-3 px-2 py-1 bg-red-500 text-white text-xs font-bold rounded-full">
                           CRÍTICO
                         </span>
                       )}
-                    </header>
+                    </div>
                     
-                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4 group-hover:text-orange-300 transition-colors">
-                      {event.title}
-                    </h3>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">{event.title}</h3>
                     
                     <div className="flex items-center text-gray-200 mb-2 text-sm sm:text-base">
-                      <MapPin className="w-4 h-4 mr-2 flex-shrink-0 text-orange-400" aria-hidden="true" />
+                      <MapPin className="w-4 h-4 mr-2 flex-shrink-0" aria-hidden="true" />
                       <span>{event.location}</span>
                     </div>
                     
                     <div className="flex items-center text-gray-200 mb-4 text-sm sm:text-base">
-                      <Users className="w-4 h-4 mr-2 flex-shrink-0 text-orange-400" aria-hidden="true" />
+                      <Users className="w-4 h-4 mr-2 flex-shrink-0" aria-hidden="true" />
                       <span>{event.affected} afetados</span>
                     </div>
                     
-                    <p id={`event-${index}-description`} className="text-gray-200 text-sm sm:text-base mb-4 leading-relaxed">
-                      {event.description}
-                    </p>
+                    <p id={`event-${index}-description`} className="text-gray-200 text-sm sm:text-base mb-4 leading-relaxed">{event.description}</p>
                     
                     {selectedEvent === index && (
                       <div className="mt-4 sm:mt-6 space-y-4 animate-fade-in">
-                        <div className="p-4 sm:p-6 bg-slate-900/80 rounded-lg border border-slate-600 transition-all duration-300 hover:border-orange-400/50">
+                        <div className="p-4 sm:p-6 bg-slate-900/80 rounded-lg border border-slate-600">
                           <div className="flex items-center text-yellow-400 mb-3">
                             <Zap className="w-4 h-4 mr-2" aria-hidden="true" />
                             <span className="font-semibold text-sm sm:text-base">Impacto Principal</span>
@@ -218,23 +205,23 @@ const Timeline = () => {
                         
                         <div className="p-3 bg-slate-800/60 rounded-lg border border-slate-700">
                           <p className="text-gray-300 text-xs sm:text-sm">
-                            <span className="font-medium text-orange-400">Fonte:</span> {event.source}
+                            <span className="font-medium">Fonte:</span> {event.source}
                           </p>
                         </div>
                       </div>
                     )}
                     
                     <div className="mt-4 text-center">
-                      <span className="text-orange-400 text-sm font-medium transition-all duration-300 group-hover:text-orange-300">
-                        {selectedEvent === index ? '▲ Pressione para recolher' : '▼ Pressione para expandir'}
+                      <span className="text-orange-400 text-sm font-medium">
+                        {selectedEvent === index ? 'Pressione Enter para recolher' : 'Pressione Enter para expandir'}
                       </span>
                     </div>
-                  </article>
+                  </div>
                 </div>
 
                 {/* Timeline dot - Only visible on desktop */}
-                <div className={`timeline-dot hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full border-4 border-orange-400 z-10 shadow-lg ${
-                  selectedEvent === index ? 'bg-orange-400 scale-150 active' : 'bg-white hover:bg-orange-100'
+                <div className={`hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full border-4 border-orange-400 z-10 shadow-lg transition-all duration-500 ${
+                  selectedEvent === index ? 'bg-orange-400 scale-150' : 'bg-white'
                 }`}></div>
               </div>
             </div>
