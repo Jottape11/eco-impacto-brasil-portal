@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { Heart, MapPin, Eye, Share2, Cloud, Droplets, Sun, ExternalLink, Volume2, User } from 'lucide-react';
+import { Heart, MapPin, Eye, Share2, Cloud, Droplets, Sun, ExternalLink, Volume2, User, AlertTriangle } from 'lucide-react';
 
 const Stories = () => {
   const [expandedStory, setExpandedStory] = useState(null);
