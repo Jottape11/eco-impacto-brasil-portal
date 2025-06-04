@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Github, Youtube, Instagram, Mail, MapPin } from 'lucide-react';
 
@@ -64,7 +63,7 @@ const Footer = () => {
 
         <div className="border-t border-slate-800 mt-8 pt-8 text-center">
           <p className="text-gray-400">
-            © 2024 O Chamado: Resposta à Crise Climática. Todos os direitos reservados.
+            © 2025 O Chamado: Resposta à Crise Climática. Todos os direitos reservados.
           </p>
           <p className="text-gray-500 text-sm mt-2">
             Desenvolvido com ❤️ para conscientizar sobre as mudanças climáticas no Brasil
