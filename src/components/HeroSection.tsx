@@ -1,6 +1,6 @@
-
 import React, { useEffect, useState } from 'react';
 import { AlertTriangle, Users, DollarSign, Play } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   const [visibleStats, setVisibleStats] = useState(false);
@@ -114,10 +114,13 @@ const HeroSection = () => {
             Explore as Histórias
           </button>
           
-          <button className="flex items-center gap-2 border-2 border-white/80 text-white hover:bg-white hover:text-slate-900 focus:bg-white focus:text-slate-900 focus:outline-none focus:ring-4 focus:ring-white/30 px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold transition-all duration-300 w-full sm:w-auto">
+          <Link 
+            to="/video"
+            className="flex items-center gap-2 border-2 border-white/80 text-white hover:bg-white hover:text-slate-900 focus:bg-white focus:text-slate-900 focus:outline-none focus:ring-4 focus:ring-white/30 px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold transition-all duration-300 w-full sm:w-auto"
+          >
             <Play className="w-5 h-5" aria-hidden="true" />
             Assista ao Vídeo
-          </button>
+          </Link>
         </div>
 
         {/* Scroll Indicator */}
